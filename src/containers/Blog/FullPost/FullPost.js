@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 import classes from './FullPost.module.css';
+import {withRouter} from 'react-router-dom';
 
 class FullPost extends Component {
 
@@ -9,10 +10,11 @@ class FullPost extends Component {
         loadedPost: null
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.id) {
-            if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)) {
-                axios.get('posts/' + this.props.id).then(response => {
+    componentDidMount(prevProps, prevState, snapshot) {
+        console.log('props', this.props);
+        if (this.props.match.params.id) {
+            if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.match.params.id)) {
+                axios.get('posts/' + this.props.match.params.id).then(response => {
                     this.setState({
                         loadedPost: response.data
                     })
@@ -24,7 +26,7 @@ class FullPost extends Component {
     }
 
     deleteDataHandler = id => {
-        // axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.id).then(response => {
+        // axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id).then(response => {
         //     console.log('delete', response);
         // }).catch(error => {
         //     console.log(error);
@@ -45,7 +47,7 @@ class FullPost extends Component {
                     <p>{this.state.loadedPost.body}</p>
                     <div className={classes.Edit}>
                         <button className={classes.Delete}
-                                onClick={() => this.deleteDataHandler(this.props.id)}>Delete
+                                onClick={() => this.deleteDataHandler(this.props.match.params.id)}>Delete
                         </button>
                     </div>
                 </div>

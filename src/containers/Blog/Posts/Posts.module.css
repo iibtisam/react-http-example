@@ -5,3 +5,11 @@
     width: 80%;
     margin: auto;
 }
+
+
+.Posts a,
+.Posts a:hover,
+.Posts a:active {
+    text-decoration: none;
+    color: #20accd;
+}
