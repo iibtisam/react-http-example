@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import classes from './NewPost.module.css';
+import {Redirect} from "react-router-dom";
 
 
 class NewPost extends Component {
     state = {
         title: '',
         content: '',
-        author: 'Ibtisam'
+        author: 'Ibtisam',
+        submitted: false
     };
 
     componentDidMount() {
-        console.log(this.props);
+        // console.log(this.props);
     }
 
     postDataHandler = () => {
@@ -23,13 +25,20 @@ class NewPost extends Component {
 
         axios.post('posts', data).then(response => {
             console.log(response);
+            // this.setState({submitted: true})
+            this.props.history.push('/posts'); // we can go back from browser from upper example we cannot
         });
     };
 
 
     render () {
+        // let redirect = null;
+        // if (this.state.submitted){
+        //     redirect = <Redirect to='/posts' />
+        // }
         return (
             <div className={classes.NewPost}>
+                {/*{redirect}*/}
                 <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
